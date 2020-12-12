@@ -1,0 +1,35 @@
+{
+  "name": "file-collection",
+  "version": "1.0.0",
+  "description": "Vue3 file collection component, capable of uploading directly to s3",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "dropzone": "^5.7.2",
+    "guid-ts": "^1.1.0",
+    "popper.js": "^1.16.1",
+    "vue": "^3.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@vue/compiler-sfc": "^3.0.4",
+    "axios": "^0.21.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "jquery": "^3.5.1",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "vue-loader": "^16.1.1",
+    "webpack": "^5.10.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
