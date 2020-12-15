@@ -1,6 +1,9 @@
 <template>
-
-  <file-dialog-button @filesSelected="filesSelected" />
+  <input
+      id="fileInput"
+      type="file"
+      @change="filesSelected($event.target.files)"
+      style="display:none">
 
   <div class="fileStack">
     <file-view
@@ -8,7 +11,6 @@
         :file-object="file"
     />
   </div>
-
 </template>
 
 <script>
@@ -16,7 +18,6 @@
 
 import $ from 'jquery'
 import FileView from './FileView.vue'
-import FileDialogButton from "./FileDialogButton.vue";
 import {FileObject} from "./FileObject"
 
 FileObject.awsSigningEndpoint = "https://127.0.0.1/aws-sign"
@@ -25,7 +26,7 @@ export default {
 
   name: "FileCollection",
 
-  components: {FileView, FileDialogButton},
+  components: {FileView},
 
   props: {
 
@@ -55,14 +56,12 @@ export default {
   },
 
   created() {
+    console.log("file collection created");
     this.files = this.initialFiles
   },
 
-  mounted() {
-
-  },
-
   methods: {
+
     openFileDialog() {
       $('#fileInput').trigger('click')
     },
