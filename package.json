@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "",
   "license": "MIT",
-  "module": "dist/file-collection.esm.js",
+  "main": "src/FileCollection.vue",
   "scripts": {
     "watch": "webpack --watch",
     "serve": "webpack serve",
