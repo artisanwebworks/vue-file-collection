@@ -1,5 +1,4 @@
-import $ from 'jquery';
-import { pushScopeId, popScopeId, openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, withScopeId, resolveComponent, renderList } from 'vue';
+import { pushScopeId, popScopeId, openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, withScopeId, resolveComponent, createCommentVNode, renderList } from 'vue';
 import axios from 'axios';
 import { Guid } from 'guid-ts';
 
@@ -13,6 +12,8 @@ var script = {
       required: true
     }
   },
+
+  emits: ['delete'],
 
   data() {
     return {
@@ -40,7 +41,7 @@ var script = {
     },
 
     deleteThisFile() {
-      alert('delete ' + this.fileObject.id);
+      this.$emit('delete', this.fileObject.id);
     }
   },
 
@@ -98,29 +99,31 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const PENDING_UPLOAD = "pending-upload";
-const UPLOADING = "uploading";
-const UPLOADED = "uploaded";
-const FAILED = "failed";
+const STATES = {
+  PENDING_UPLOAD: "pending-upload",
+  UPLOADING: "uploading",
+  UPLOADED: "uploaded",
+  FAILED: "failed"
+};
 class FileObject {
-  constructor(dlgFile) {
+  constructor(fileData, state = STATES.PENDING_UPLOAD) {
     this.id = Guid.newGuid().contentStr;
-    this.name = dlgFile.name;
-    this.size = dlgFile.size;
-    this.state = PENDING_UPLOAD;
-    this.dlgFile = dlgFile;
+    this.name = fileData.name;
+    this.size = fileData.size;
+    this.state = state;
+    this.fileData = fileData;
   }
 
   get isPendingUpload() {
-    return this.state === PENDING_UPLOAD;
+    return this.state === STATES.PENDING_UPLOAD;
   }
 
   get isUploading() {
-    return this.state === UPLOADING;
+    return this.state === STATES.UPLOADING;
   }
 
   get isUploaded() {
-    return this.state === UPLOADED;
+    return this.state === STATES.UPLOADED;
   }
 
   upload(onUploadProgress) {
@@ -128,18 +131,18 @@ class FileObject {
       return Promise.reject("FileObject not eligible for upload");
     }
 
-    this.state = UPLOADING;
+    this.state = STATES.UPLOADING;
     return getAwsSignedPolicy().then(awsData => {
-      const formData = createFormData(awsData.postParams, this.dlgFile);
+      const formData = createFormData(awsData.postParams, this.fileData);
       const config = {
         onUploadProgress
       };
       return axios.post(awsData.postUrl, formData, config);
     }).then(result => {
-      this.state = UPLOADED;
+      this.state = STATES.UPLOADED;
       return result.data;
     }).catch(err => {
-      this.state = FAILED;
+      this.state = STATES.FAILED;
       console.error('Upload to AWS S3 server failed', err);
     });
   }
@@ -208,6 +211,8 @@ var script$1 = {
 
   },
 
+  emits: ['deleteFile'],
+
   data() {
     return {
       files: undefined
@@ -222,7 +227,7 @@ var script$1 = {
   methods: {
 
     openFileDialog() {
-      $('#fileInput').trigger('click');
+      window.document.getElementById('fileInput').click();
     },
 
     filesSelected(webApiFileList) {
@@ -235,19 +240,34 @@ var script$1 = {
       }
     },
 
+    deleteLocalDescriptor(fileId) {
+      let targetIdx;
+      for (let i = 0; i < this.files.length; i++) {
+        if (this.files[i].id === fileId) {
+          targetIdx = i;
+          break
+        }
+      }
+      if (targetIdx !== undefined) {
+        this.files.splice(targetIdx, 1);
+        this.$emit('deleteFile', fileId);
+      }
+    }
+
   }
 };
 
 const _withId$1 = /*#__PURE__*/withScopeId("data-v-8306af1a");
 
 pushScopeId("data-v-8306af1a");
-const _hoisted_1$1 = { class: "fileStack" };
+const _hoisted_1$1 = { class: "fileCollection" };
 popScopeId();
 
 const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $options) => {
   const _component_file_view = resolveComponent("file-view");
 
   return (openBlock(), createBlock(Fragment, null, [
+    createCommentVNode(" Hidden input element on which we trigger 'click' to\n       provoke opening of browser file dialog "),
     createVNode("input", {
       id: "fileInput",
       type: "file",
@@ -256,7 +276,10 @@ const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $o
     }, null, 32 /* HYDRATE_EVENTS */),
     createVNode("div", _hoisted_1$1, [
       (openBlock(true), createBlock(Fragment, null, renderList($data.files, (file) => {
-        return (openBlock(), createBlock(_component_file_view, { "file-object": file }, null, 8 /* PROPS */, ["file-object"]))
+        return (openBlock(), createBlock(_component_file_view, {
+          "file-object": file,
+          onDelete: $options.deleteLocalDescriptor
+        }, null, 8 /* PROPS */, ["file-object", "onDelete"]))
       }), 256 /* UNKEYED_FRAGMENT */))
     ])
   ], 64 /* STABLE_FRAGMENT */))
