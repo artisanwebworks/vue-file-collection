@@ -1,22 +1,26 @@
 <template>
+
+  <!-- Hidden input element on which we trigger 'click' to
+       provoke opening of browser file dialog -->
   <input
       id="fileInput"
       type="file"
       @change="filesSelected($event.target.files)"
       style="display:none">
 
-  <div class="fileStack">
+  <div class="fileCollection">
     <file-view
         v-for="file in files"
         :file-object="file"
+        @delete="deleteLocalDescriptor"
     />
   </div>
+
 </template>
 
 <script>
 
 
-import $ from 'jquery'
 import FileView from './FileView.vue'
 import {FileObject} from "./FileObject"
 
@@ -49,6 +53,8 @@ export default {
 
   },
 
+  emits: ['deleteFile'],
+
   data() {
     return {
       files: undefined
@@ -63,7 +69,7 @@ export default {
   methods: {
 
     openFileDialog() {
-      $('#fileInput').trigger('click')
+      window.document.getElementById('fileInput').click()
     },
 
     filesSelected(webApiFileList) {
@@ -76,18 +82,31 @@ export default {
       }
     },
 
+    deleteLocalDescriptor(fileId) {
+      let targetIdx
+      for (let i = 0; i < this.files.length; i++) {
+        if (this.files[i].id === fileId) {
+          targetIdx = i
+          break
+        }
+      }
+      if (targetIdx !== undefined) {
+        this.files.splice(targetIdx, 1)
+        this.$emit('deleteFile', fileId)
+      }
+    }
+
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
-.fileStack {
-  display: flex;
-  flex-direction: column;
-  width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+.fileCollection {
+
+  .file:not(:last-child) {
+    margin-right: .6rem;
+  }
 }
 
 </style>

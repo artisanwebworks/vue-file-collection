@@ -37,6 +37,8 @@ export default {
     }
   },
 
+  emits: ['delete'],
+
   data() {
     return {
       uploadPercentage: "0%"
@@ -63,7 +65,7 @@ export default {
     },
 
     deleteThisFile() {
-      alert('delete ' + this.fileObject.id)
+      this.$emit('delete', this.fileObject.id)
     }
   },
 
@@ -73,6 +75,7 @@ export default {
 <style scoped>
 
 .file {
+  display: inline-block;
   background-color: #f5f5f5;
   max-width: 448px;
   border-radius: 5px;
