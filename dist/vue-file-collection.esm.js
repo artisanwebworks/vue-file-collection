@@ -260,7 +260,7 @@ var script$1 = {
 const _withId$1 = /*#__PURE__*/withScopeId("data-v-8306af1a");
 
 pushScopeId("data-v-8306af1a");
-const _hoisted_1$1 = { class: "fileCollection" };
+const _hoisted_1$1 = { class: "file-collection" };
 popScopeId();
 
 const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $options) => {

@@ -8,7 +8,7 @@
       @change="filesSelected($event.target.files)"
       style="display:none">
 
-  <div class="fileCollection">
+  <div class="file-collection">
     <file-view
         v-for="file in files"
         :file-object="file"
@@ -102,7 +102,7 @@ export default {
 
 <style lang="scss" scoped>
 
-.fileCollection {
+.file-collection {
 
   .file:not(:last-child) {
     margin-right: .6rem;

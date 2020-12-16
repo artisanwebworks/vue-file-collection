@@ -82,7 +82,6 @@ export default {
   font-size: .875rem;
   border: 1px solid transparent;
   font-weight: bold;
-  margin: 0 0 9px;
   overflow-y: hidden;
   padding: 4px 4px 4px 8px;
 }

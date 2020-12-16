@@ -1,4 +1,4 @@
-.fileCollection .file:not(:last-child) {
+.file-collection .file:not(:last-child) {
   margin-right: .6rem; }
 
 .file {
@@ -9,7 +9,6 @@
   font-size: .875rem;
   border: 1px solid transparent;
   font-weight: bold;
-  margin: 0 0 9px;
   overflow-y: hidden;
   padding: 4px 4px 4px 8px; }
 
