@@ -4,20 +4,21 @@
   "version": "1.0.0",
   "author": "",
   "license": "MIT",
-  "main": "src/FileCollection.vue",
+
+  "module": "dist/vue-file-collection.esm.js",
+
   "scripts": {
-    "watch": "webpack --watch",
-    "serve": "webpack serve",
+    "watch:test": "webpack --watch --config test/webpack.config.js",
     "roll": "rollup --config rollup.config.js"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "bootstrap": "^4.5.3",
     "dropzone": "^5.7.2",
     "guid-ts": "^1.1.0",
     "popper.js": "^1.16.1",
-    "vue": "^3.0.4"
-  },
-  "devDependencies": {
+    "vue": "^3.0.4",
     "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.7",

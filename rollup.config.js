@@ -5,7 +5,7 @@ export default {
     input: 'src/FileCollection.vue',
     output: {
         format: 'esm',
-        file: 'dist/file-collection.esm.js'
+        file: 'dist/vue-file-collection.esm.js'
     },
     plugins: [
         css(),
