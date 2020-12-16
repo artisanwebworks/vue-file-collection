@@ -62,6 +62,7 @@
 
 import FileCollection from "../src/FileCollection.vue"
 import {FileObject, STATES} from "../src/FileObject"
+export {FileObject, STATES}
 
 export default {
   name: "App",
