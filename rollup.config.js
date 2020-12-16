@@ -1,5 +1,6 @@
 import vue from 'rollup-plugin-vue'
 import css from 'rollup-plugin-css-only'
+import babel from '@rollup/plugin-babel';
 
 export default {
     input: 'src/FileCollection.vue',
@@ -9,6 +10,7 @@ export default {
     },
     plugins: [
         css(),
-        vue({css: false})
+        vue({css: false}),
+        babel({ babelHelpers: 'bundled' })
     ]
 }

@@ -4,9 +4,7 @@
   "version": "1.0.0",
   "author": "",
   "license": "MIT",
-
   "module": "dist/vue-file-collection.esm.js",
-
   "scripts": {
     "watch:test": "webpack --watch --config test/webpack.config.js",
     "roll": "rollup --config rollup.config.js"
@@ -23,6 +21,7 @@
     "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
+    "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@vue/compiler-sfc": "^3.0.4",
     "babel-loader": "^8.2.2",

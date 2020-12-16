@@ -83,98 +83,100 @@ script.render = render;
 script.__scopeId = "data-v-2230ea8c";
 script.__file = "src/FileView.vue";
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
 const PENDING_UPLOAD = "pending-upload";
 const UPLOADING = "uploading";
 const UPLOADED = "uploaded";
 const FAILED = "failed";
-
 class FileObject {
+  constructor(dlgFile) {
+    this.id = Guid.newGuid().contentStr;
+    this.name = dlgFile.name;
+    this.size = dlgFile.size;
+    this.state = PENDING_UPLOAD;
+    this.dlgFile = dlgFile;
+  }
 
-    static awsSigningEndpoint
+  get isPendingUpload() {
+    return this.state === PENDING_UPLOAD;
+  }
 
-    constructor(dlgFile) {
-        this.id = Guid.newGuid().contentStr;
-        this.name = dlgFile.name;
-        this.size = dlgFile.size;
-        this.state = PENDING_UPLOAD;
-        this.dlgFile = dlgFile;
+  get isUploading() {
+    return this.state === UPLOADING;
+  }
+
+  get isUploaded() {
+    return this.state === UPLOADED;
+  }
+
+  upload(onUploadProgress) {
+    if (!this.isPendingUpload) {
+      return Promise.reject("FileObject not eligible for upload");
     }
 
-    get isPendingUpload() {
-        return this.state === PENDING_UPLOAD
-    }
+    this.state = UPLOADING;
+    return getAwsSignedPolicy().then(awsData => {
+      const formData = createFormData(awsData.postParams, this.dlgFile);
+      const config = {
+        onUploadProgress
+      };
+      return axios.post(awsData.postUrl, formData, config);
+    }).then(result => {
+      this.state = UPLOADED;
+      return result.data;
+    }).catch(err => {
+      this.state = FAILED;
+      console.error('Upload to AWS S3 server failed', err);
+    });
+  }
 
-    get isUploading() {
-        return this.state === UPLOADING
-    }
-
-    get isUploaded() {
-        return this.state === UPLOADED
-    }
-
-    upload(onUploadProgress) {
-
-        if (!this.isPendingUpload) {
-            return Promise.reject("FileObject not eligible for upload")
-        }
-
-        this.state = UPLOADING;
-
-        return getAwsSignedPolicy()
-
-            .then(awsData => {
-                const formData = createFormData(awsData.postParams, this.dlgFile);
-                const config = {onUploadProgress};
-                return axios.post(awsData.postUrl, formData, config)
-            })
-
-            .then((result) => {
-                this.state = UPLOADED;
-                return result.data
-            })
-
-            .catch((err) => {
-                this.state = FAILED;
-                console.error('Upload to AWS S3 server failed', err);
-            })
-
-    }
 }
-
 /**
  * Call an endpoint that will use an AWS secret key to authorize the S3 upload.
  *
  * @return {Promise<Object>} - Signing data with which we form POST request.
  */
+
+_defineProperty(FileObject, "awsSigningEndpoint", void 0);
+
 function getAwsSignedPolicy() {
+  if (!FileObject.awsSigningEndpoint) {
+    throw new Error("awsSigningEndpoint not set");
+  }
 
-    if (!FileObject.awsSigningEndpoint) {
-        throw new Error("awsSigningEndpoint not set")
-    }
-
-    return axios.get(FileObject.awsSigningEndpoint)
-        .then((res) => {
-            return Promise.resolve(res.data)
-        })
-        .catch((err) => {
-            console.error("Dropzone failed to get aws-sign", err);
-            return Promise.reject(err)
-        })
+  return axios.get(FileObject.awsSigningEndpoint).then(res => {
+    return Promise.resolve(res.data);
+  }).catch(err => {
+    console.error("Dropzone failed to get aws-sign", err);
+    return Promise.reject(err);
+  });
 }
 
-
 function createFormData(awsFields, webApiFile) {
+  let formData = new FormData();
 
-    let formData = new FormData();
-
-    for (const awsFieldId in awsFields) {
-        if (awsFields.hasOwnProperty(awsFieldId)) {
-            formData.append(awsFieldId, awsFields[awsFieldId]);
-        }
+  for (const awsFieldId in awsFields) {
+    if (awsFields.hasOwnProperty(awsFieldId)) {
+      formData.append(awsFieldId, awsFields[awsFieldId]);
     }
+  }
 
-    formData.append('file', webApiFile);
-    return formData
+  formData.append('file', webApiFile);
+  return formData;
 }
 
 FileObject.awsSigningEndpoint = "https://127.0.0.1/aws-sign";
