@@ -1,6 +1,6 @@
 import vue from 'rollup-plugin-vue'
-import css from 'rollup-plugin-css-only'
 import babel from '@rollup/plugin-babel';
+import scss from 'rollup-plugin-scss'
 
 export default {
     input: 'src/FileCollection.vue',
@@ -9,8 +9,8 @@ export default {
         file: 'dist/vue-file-collection.esm.js'
     },
     plugins: [
-        css(),
-        vue({css: false}),
+        scss(),
+        vue(),
         babel({ babelHelpers: 'bundled' })
     ]
 }

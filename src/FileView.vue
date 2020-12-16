@@ -108,7 +108,7 @@ a {
 }
 
 .X {
-  background: url(//ssl.gstatic.com/ui/v1/icons/common/x_8px.png) no-repeat 0 0;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAYUlEQVQ4y2P4//8/A7Uxw6ihw8BQIDAAYn40MX6QOFmGQg38AMQnYAZDDTwBFTcgx1CYAf+htBwan59c7yMb/JMYA4mKKKgLfyIZLEdpRFHXpTQJU5rEPk3S6WjeHwGGAgB7bY/MvPH1YwAAAABJRU5ErkJggg==) no-repeat 0 0;
   cursor: pointer;
   float: right;
   height: 16px;
