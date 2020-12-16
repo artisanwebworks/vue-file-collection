@@ -290,3 +290,4 @@ script$1.__scopeId = "data-v-8306af1a";
 script$1.__file = "src/FileCollection.vue";
 
 export default script$1;
+export { FileObject, STATES };

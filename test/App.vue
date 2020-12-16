@@ -60,9 +60,7 @@
 
 <script>
 
-import FileCollection from "../src/FileCollection.vue"
-import {FileObject, STATES} from "../src/FileObject"
-export {FileObject, STATES}
+import FileCollection, {FileObject, STATES} from "../src/FileCollection.vue"
 
 export default {
   name: "App",

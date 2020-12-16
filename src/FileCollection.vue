@@ -20,9 +20,9 @@
 
 <script>
 
-
 import FileView from './FileView.vue'
-import {FileObject} from "./FileObject"
+import {FileObject, STATES} from "./FileObject"
+export {FileObject as FileObject, STATES as STATES}
 
 FileObject.awsSigningEndpoint = "https://127.0.0.1/aws-sign"
 

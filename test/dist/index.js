@@ -1817,10 +1817,13 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FileObject": () => /* reexport safe */ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject,
+/* harmony export */   "STATES": () => /* reexport safe */ _FileObject__WEBPACK_IMPORTED_MODULE_1__.STATES,
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _FileView_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FileView.vue */ "./src/FileView.vue");
 /* harmony import */ var _FileObject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FileObject */ "./src/FileObject.js");
+
 
 
 _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https://127.0.0.1/aws-sign";
@@ -1951,8 +1954,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/FileCollection.vue */ "./src/FileCollection.vue");
-/* harmony import */ var _src_FileObject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/FileObject */ "./src/FileObject.js");
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App",
@@ -1961,25 +1962,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      files: [new _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject({
+      files: [new _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.FileObject({
         name: "some-file.pdf",
         size: 124000
-      }, _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.STATES.UPLOADED), new _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject({
+      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED), new _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.FileObject({
         name: "foo-file.pdf",
         size: 224000
-      }, _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.STATES.UPLOADED), new _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject({
+      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED), new _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.FileObject({
         name: "bar-file.pdf",
         size: 12400
-      }, _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.STATES.UPLOADED), new _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject({
+      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED), new _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.FileObject({
         name: "bar-baz-file.pdf",
         size: 124000
-      }, _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.STATES.UPLOADED), new _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject({
+      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED), new _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.FileObject({
         name: "other-file.pdf",
         size: 6400
-      }, _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.STATES.UPLOADED), new _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject({
+      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED), new _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.FileObject({
         name: "brochure.pdf",
         size: 98000
-      }, _src_FileObject__WEBPACK_IMPORTED_MODULE_1__.STATES.UPLOADED)]
+      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED)]
     };
   },
   methods: {
@@ -3109,6 +3110,8 @@ module.exports = function (list, options) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FileObject": () => /* reexport safe */ _FileCollection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.FileObject,
+/* harmony export */   "STATES": () => /* reexport safe */ _FileCollection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.STATES,
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _FileCollection_vue_vue_type_template_id_8306af1a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FileCollection.vue?vue&type=template&id=8306af1a&scoped=true */ "./src/FileCollection.vue?vue&type=template&id=8306af1a&scoped=true");
@@ -3198,7 +3201,9 @@ _App_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_1_use_0_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_10_use_0_FileCollection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_1_use_0_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_10_use_0_FileCollection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default,
+/* harmony export */   "FileObject": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_1_use_0_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_10_use_0_FileCollection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.FileObject,
+/* harmony export */   "STATES": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_1_use_0_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_10_use_0_FileCollection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.STATES
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_1_use_0_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_10_use_0_FileCollection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../node_modules/babel-loader/lib/index.js??clonedRuleSet-1.use[0]!../node_modules/vue-loader/dist/index.js??ruleSet[1].rules[10].use[0]!./FileCollection.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-1.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[10].use[0]!./src/FileCollection.vue?vue&type=script&lang=js");
  
