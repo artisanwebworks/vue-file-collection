@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .file {
   display: inline-block;
@@ -84,39 +84,40 @@ export default {
   font-weight: bold;
   overflow-y: hidden;
   padding: 4px 4px 4px 8px;
+
+  a {
+    color: #15c;
+    float: left;
+    padding: 0 8px 0 0;
+    text-decoration: none;
+  }
+
+  .name {
+    display: inline-block;
+    overflow: hidden;
+    padding: 3px 0;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
+    max-width: 315px;
+  }
+
+  .size {
+    color: #777;
+    display: inline-block;
+    padding: 3px 0;
+  }
+
+  .X {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAYUlEQVQ4y2P4//8/A7Uxw6ihw8BQIDAAYn40MX6QOFmGQg38AMQnYAZDDTwBFTcgx1CYAf+htBwan59c7yMb/JMYA4mKKKgLfyIZLEdpRFHXpTQJU5rEPk3S6WjeHwGGAgB7bY/MvPH1YwAAAABJRU5ErkJggg==) no-repeat 0 0;
+    cursor: pointer;
+    float: right;
+    height: 16px;
+    margin-top: 1px;
+    opacity: .5;
+    width: 16px;
+  }
 }
 
-a {
-  color: #15c;
-  float: left;
-  padding: 0 8px 0 0;
-  text-decoration: none;
-}
-
-.name {
- display: inline-block;
- overflow: hidden;
- padding: 3px 0;
- text-overflow: ellipsis;
- vertical-align: bottom;
- white-space: nowrap;
- max-width: 315px;
-}
-
-.size {
-  color: #777;
-  display: inline-block;
-  padding: 3px 0;
-}
-
-.X {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAYUlEQVQ4y2P4//8/A7Uxw6ihw8BQIDAAYn40MX6QOFmGQg38AMQnYAZDDTwBFTcgx1CYAf+htBwan59c7yMb/JMYA4mKKKgLfyIZLEdpRFHXpTQJU5rEPk3S6WjeHwGGAgB7bY/MvPH1YwAAAABJRU5ErkJggg==) no-repeat 0 0;
-  cursor: pointer;
-  float: right;
-  height: 16px;
-  margin-top: 1px;
-  opacity: .5;
-  width: 16px;
-}
 
 </style>
