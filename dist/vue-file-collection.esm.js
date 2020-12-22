@@ -147,6 +147,10 @@ class FileObject {
     });
   }
 
+  getLocalBlobURL() {
+    return window.URL.createObjectURL(this.fileData);
+  }
+
 }
 /**
  * Call an endpoint that will use an AWS secret key to authorize the S3 upload.
@@ -190,6 +194,8 @@ var script$1 = {
 
   components: {FileView: script},
 
+  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress'],
+
   props: {
 
     /**
@@ -211,8 +217,6 @@ var script$1 = {
 
   },
 
-  emits: ['deleteFile'],
-
   data() {
     return {
       files: undefined
@@ -230,6 +234,10 @@ var script$1 = {
       window.document.getElementById('fileInput').click();
     },
 
+    openImageDialog() {
+      window.document.getElementById('imageInput').click();
+    },
+
     filesSelected(webApiFileList) {
       console.log("files selected", webApiFileList);
       for (let i = 0; i < webApiFileList.length; i++) {
@@ -238,6 +246,14 @@ var script$1 = {
         this.files.push(uploaderFile);
         console.log("component file list", this.files);
       }
+    },
+
+    imageSelected(webApiFileList) {
+      let imageFileObject = new FileObject(webApiFileList[0]);
+      this.$emit('imageSelected', imageFileObject);
+      imageFileObject.upload((progress) => {
+        this.$emit('imageUploadProgress', progress);
+      });
     },
 
     deleteLocalDescriptor(fileId) {
@@ -267,11 +283,19 @@ const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $o
   const _component_file_view = resolveComponent("file-view");
 
   return (openBlock(), createBlock(Fragment, null, [
-    createCommentVNode(" Hidden input element on which we trigger 'click' to\n       provoke opening of browser file dialog "),
+    createCommentVNode(" Hidden input element on which we trigger 'click' to\n       provoke opening of file selection dialog "),
     createVNode("input", {
       id: "fileInput",
       type: "file",
       onChange: _cache[1] || (_cache[1] = $event => ($options.filesSelected($event.target.files))),
+      style: {"display":"none"}
+    }, null, 32 /* HYDRATE_EVENTS */),
+    createCommentVNode(" Hidden input of triggering image file dialog "),
+    createVNode("input", {
+      id: "imageInput",
+      type: "file",
+      accept: "image/png, image/jpeg, image/gif",
+      onChange: _cache[2] || (_cache[2] = $event => ($options.imageSelected($event.target.files))),
       style: {"display":"none"}
     }, null, 32 /* HYDRATE_EVENTS */),
     createVNode("div", _hoisted_1$1, [
