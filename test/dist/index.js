@@ -1832,6 +1832,7 @@ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https:
   components: {
     FileView: _FileView_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
+  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress'],
   props: {
     /**
      * Array of S3Uploader files representing previous uploads.
@@ -1850,7 +1851,6 @@ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https:
       required: false
     }
   },
-  emits: ['deleteFile'],
   data: function data() {
     return {
       files: undefined
@@ -1864,6 +1864,9 @@ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https:
     openFileDialog: function openFileDialog() {
       window.document.getElementById('fileInput').click();
     },
+    openImageDialog: function openImageDialog() {
+      window.document.getElementById('imageInput').click();
+    },
     filesSelected: function filesSelected(webApiFileList) {
       console.log("files selected", webApiFileList);
 
@@ -1873,6 +1876,15 @@ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https:
         this.files.push(uploaderFile);
         console.log("component file list", this.files);
       }
+    },
+    imageSelected: function imageSelected(webApiFileList) {
+      var _this = this;
+
+      var imageFileObject = new _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject(webApiFileList[0]);
+      this.$emit('imageSelected', imageFileObject);
+      imageFileObject.upload(function (progress) {
+        _this.$emit('imageUploadProgress', progress);
+      });
     },
     deleteLocalDescriptor: function deleteLocalDescriptor(fileId) {
       var targetIdx;
@@ -1980,7 +1992,8 @@ __webpack_require__.r(__webpack_exports__);
       }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED), new _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.FileObject({
         name: "brochure.pdf",
         size: 98000
-      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED)]
+      }, _src_FileCollection_vue__WEBPACK_IMPORTED_MODULE_0__.STATES.UPLOADED)],
+      imageFiles: []
     };
   },
   methods: {
@@ -1989,6 +2002,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteFile: function deleteFile(id) {
       console.log("deleting file", id);
+    },
+    insertImage: function insertImage() {
+      this.$refs.fileCollection.openImageDialog();
+    },
+    imageSelected: function imageSelected(fileObject) {
+      this.imageFiles.push(fileObject);
+      console.log("image file object", fileObject);
+    },
+    imageUploadProgress: function imageUploadProgress(progress) {
+      console.log("upload progress", progress);
     }
   }
 });
@@ -2022,11 +2045,23 @@ var _hoisted_1 = {
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   var _component_file_view = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("file-view");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Hidden input element on which we trigger 'click' to\n       provoke opening of browser file dialog "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Hidden input element on which we trigger 'click' to\n       provoke opening of file selection dialog "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     id: "fileInput",
     type: "file",
     onChange: _cache[1] || (_cache[1] = function ($event) {
       return $options.filesSelected($event.target.files);
+    }),
+    style: {
+      "display": "none"
+    }
+  }, null, 32
+  /* HYDRATE_EVENTS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Hidden input of triggering image file dialog "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    id: "imageInput",
+    type: "file",
+    accept: "image/png, image/jpeg, image/gif",
+    onChange: _cache[2] || (_cache[2] = function ($event) {
+      return $options.imageSelected($event.target.files);
     }),
     style: {
       "display": "none"
@@ -2156,10 +2191,33 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 var _hoisted_6 = {
   "class": "header-line"
 };
-
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_7 = {
   "class": "email-body"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Hello World, ... "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br")], -1
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Hello World, ... ");
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
 /* HOISTED */
 );
 
@@ -2169,14 +2227,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" title bar "), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 'To' line "), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 'Subject' line "), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 'Subject' line "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_file_collection, {
     "initial-files": $data.files,
     ref: "fileCollection",
-    onDeleteFile: $options.deleteFile
+    onDeleteFile: $options.deleteFile,
+    onImageSelected: $options.imageSelected,
+    onImageUploadProgress: $options.imageUploadProgress
   }, null, 8
   /* PROPS */
-  , ["initial-files", "onDeleteFile"])]), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["initial-files", "onDeleteFile", "onImageSelected", "onImageUploadProgress"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [_hoisted_8, _hoisted_9, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.imageFiles, function (imageFile) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+      src: imageFile.getLocalBlobURL()
+    }, null, 8
+    /* PROPS */
+    , ["src"]);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  )), _hoisted_10, _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.add && $options.add.apply($options, arguments);
     })
-  }, "Attach File")])])]);
+  }, "Attach File"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[2] || (_cache[2] = function () {
+      return $options.insertImage && $options.insertImage.apply($options, arguments);
+    })
+  }, "Insert Image")])])]);
 }
 
 /***/ }),
@@ -2248,6 +2320,11 @@ var FileObject = /*#__PURE__*/function () {
         _this.state = STATES.FAILED;
         console.error('Upload to AWS S3 server failed', err);
       });
+    }
+  }, {
+    key: "getLocalBlobURL",
+    value: function getLocalBlobURL() {
+      return window.URL.createObjectURL(this.fileData);
     }
   }, {
     key: "isPendingUpload",
@@ -2396,7 +2473,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".editor-container {\n  width: 40rem;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 2rem;\n  display: inline-block;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  -webkit-font-smoothing: antialiased;\n  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;\n}\n.template-title {\n  background-color: #404040;\n  display: flex;\n  flex-direction: row;\n  color: white;\n  font-weight: 500;\n  font-size: 1.1rem;\n  border-top-left-radius: 0.5rem;\n  border-top-right-radius: 0.5rem;\n  padding: 0.5rem 1rem;\n}\n.template-title .title-buttons {\n    margin-left: auto;\n}\n.template-title .title-buttons img {\n      opacity: .6;\n      vertical-align: middle;\n}\n.email-body {\n  margin-top: 1rem;\n}\n.template-body {\n  padding: 0 1rem 0.5rem;\n  height: 100%;\n}\n.template-body .header-line {\n    display: flex;\n    padding-bottom: 0.5rem;\n    padding-top: 0.5rem;\n    border-bottom: #e6e6e6 1px solid;\n}\n.template-body .line-label {\n    font-size: 1.1rem;\n    color: #777;\n    margin-right: 1rem;\n}\n.content {\n  min-height: 8rem;\n  margin-top: 1rem;\n}\n.editable-area-layers {\n  position: relative;\n}\n.editable-area-layers .footer-stack {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    z-index: 100;\n}\n.footer {\n  display: flex;\n  flex-direction: row;\n  align-items: flex-end;\n}\n.footer > :last-child {\n    margin-left: 1rem;\n    display: flex;\n    flex-direction: column;\n}\n.footer > :last-child > :first-child {\n      margin-bottom: .5rem;\n}\n*:focus {\n  outline: none;\n}\n", "",{"version":3,"sources":["webpack://./test/App.vue"],"names":[],"mappings":"AAiBA;EACE,YAAY;EACZ,iBAAiB;EACjB,kBAAkB;EAClB,gBAAgB;EAChB,qBAAqB;EACrB,qHAAqH;EACrH,mCAAmC;EACnC,8DAA8D;AAAA;AAGhE;EACE,yBA1BuB;EA6BvB,aAAa;EACb,mBAAmB;EAGnB,YAAY;EACZ,gBAAgB;EAChB,iBAAiB;EAGjB,8BArCsB;EAsCtB,+BAtCsB;EAuCtB,oBAtCa;AAAA;AAuBf;IAkBI,iBAAiB;AAAA;AAlBrB;MAqBM,WAAW;MACX,sBAAsB;AAAA;AAK5B;EACE,gBAAgB;AAAA;AAIlB;EACE,sBAvDc;EAwDd,YAAY;AAAA;AAFd;IAKI,aAAa;IACb,sBAPgB;IAQhB,mBARgB;IAShB,gCAA+C;AAAA;AARnD;IAYI,iBAAiB;IACjB,WAlEmB;IAmEnB,kBAAkB;AAAA;AAItB;EACE,gBAAgB;EAChB,gBAAgB;AAAA;AAGlB;EACE,kBAAkB;AAAA;AADpB;IAII,qBAAqB;IACrB,kBAAkB;IAClB,OAAO;IACP,SAAS;IACT,YAAY;AAAA;AAIhB;EACE,aAAa;EACb,mBAAmB;EACnB,qBAAqB;AAAA;AAHvB;IAOI,iBAAiB;IACjB,aAAa;IACb,sBAAsB;AAAA;AAT1B;MAYM,oBAAoB;AAAA;AAM1B;EACE,aAAa;AAAA","sourcesContent":["\n\n\n$title-bar-color: #404040;\n$title-bar-radius: .5rem;\n$h-margin: 1rem;\n$v-margin: .5rem;\n$faint-text-color: #777;\n$faint-separator-color: #e6e6e6;\n$overlay-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n\n// Token and token lists\n$extracted-token-color: #ebebeb;\n$special-token-color: #ccc;\n$subtitle-color: #595959;\n$token-popup-spacing-offset: .5rem;\n\n.editor-container {\n  width: 40rem;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 2rem;\n  display: inline-block;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  -webkit-font-smoothing: antialiased;\n  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;\n}\n\n.template-title {\n  background-color: $title-bar-color;\n\n  // display\n  display: flex;\n  flex-direction: row;\n\n  // text formatting\n  color: white;\n  font-weight: 500;\n  font-size: 1.1rem;\n\n  // borders and spacing\n  border-top-left-radius: $title-bar-radius;\n  border-top-right-radius: $title-bar-radius;\n  padding: $v-margin $h-margin;\n\n  .title-buttons {\n    margin-left: auto;\n\n    img {\n      opacity: .6;\n      vertical-align: middle;\n    }\n  }\n}\n\n.email-body {\n  margin-top: 1rem;\n}\n\n$line-padding: .5rem;\n.template-body {\n  padding: 0 $h-margin $v-margin;\n  height: 100%;\n\n  .header-line {\n    display: flex;\n    padding-bottom: $line-padding;\n    padding-top: $line-padding;\n    border-bottom: $faint-separator-color 1px solid;\n  }\n\n  .line-label {\n    font-size: 1.1rem;\n    color: $faint-text-color;\n    margin-right: 1rem;\n  }\n}\n\n.content {\n  min-height: 8rem;\n  margin-top: 1rem;\n}\n\n.editable-area-layers {\n  position: relative;\n\n  .footer-stack {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    z-index: 100;\n  }\n}\n\n.footer {\n  display: flex;\n  flex-direction: row;\n  align-items: flex-end;\n\n  // Stack of formatting toolbar on top of misc toolbar\n  & > :last-child {\n    margin-left: 1rem;\n    display: flex;\n    flex-direction: column;\n\n    & > :first-child {\n      margin-bottom: .5rem;\n    }\n  }\n}\n\n// Eliminate outline on focused content-editable div\n*:focus {\n  outline: none;\n}\n\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".editor-container {\n  width: 40rem;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 2rem;\n  display: inline-block;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  -webkit-font-smoothing: antialiased;\n  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;\n}\n.template-title {\n  background-color: #404040;\n  display: flex;\n  flex-direction: row;\n  color: white;\n  font-weight: 500;\n  font-size: 1.1rem;\n  border-top-left-radius: 0.5rem;\n  border-top-right-radius: 0.5rem;\n  padding: 0.5rem 1rem;\n}\n.template-title .title-buttons {\n    margin-left: auto;\n}\n.template-title .title-buttons img {\n      opacity: .6;\n      vertical-align: middle;\n}\n.email-body {\n  margin-top: 1rem;\n}\n.template-body {\n  padding: 0 1rem 0.5rem;\n  height: 100%;\n}\n.template-body .header-line {\n    display: flex;\n    padding-bottom: 0.5rem;\n    padding-top: 0.5rem;\n    border-bottom: #e6e6e6 1px solid;\n}\n.template-body .line-label {\n    font-size: 1.1rem;\n    color: #777;\n    margin-right: 1rem;\n}\n.content {\n  min-height: 8rem;\n  margin-top: 1rem;\n}\n.editable-area-layers {\n  position: relative;\n}\n.editable-area-layers .footer-stack {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    z-index: 100;\n}\n.footer {\n  display: flex;\n  flex-direction: row;\n  align-items: flex-end;\n}\n.footer > :last-child {\n    margin-left: 1rem;\n    display: flex;\n    flex-direction: column;\n}\n.footer > :last-child > :first-child {\n      margin-bottom: .5rem;\n}\n*:focus {\n  outline: none;\n}\nimg {\n  max-width: 1000px;\n}\n", "",{"version":3,"sources":["webpack://./test/App.vue"],"names":[],"mappings":"AAiBA;EACE,YAAY;EACZ,iBAAiB;EACjB,kBAAkB;EAClB,gBAAgB;EAChB,qBAAqB;EACrB,qHAAqH;EACrH,mCAAmC;EACnC,8DAA8D;AAAA;AAGhE;EACE,yBA1BuB;EA6BvB,aAAa;EACb,mBAAmB;EAGnB,YAAY;EACZ,gBAAgB;EAChB,iBAAiB;EAGjB,8BArCsB;EAsCtB,+BAtCsB;EAuCtB,oBAtCa;AAAA;AAuBf;IAkBI,iBAAiB;AAAA;AAlBrB;MAqBM,WAAW;MACX,sBAAsB;AAAA;AAK5B;EACE,gBAAgB;AAAA;AAIlB;EACE,sBAvDc;EAwDd,YAAY;AAAA;AAFd;IAKI,aAAa;IACb,sBAPgB;IAQhB,mBARgB;IAShB,gCAA+C;AAAA;AARnD;IAYI,iBAAiB;IACjB,WAlEmB;IAmEnB,kBAAkB;AAAA;AAItB;EACE,gBAAgB;EAChB,gBAAgB;AAAA;AAGlB;EACE,kBAAkB;AAAA;AADpB;IAII,qBAAqB;IACrB,kBAAkB;IAClB,OAAO;IACP,SAAS;IACT,YAAY;AAAA;AAIhB;EACE,aAAa;EACb,mBAAmB;EACnB,qBAAqB;AAAA;AAHvB;IAOI,iBAAiB;IACjB,aAAa;IACb,sBAAsB;AAAA;AAT1B;MAYM,oBAAoB;AAAA;AAM1B;EACE,aAAa;AAAA;AAGf;EACE,iBAAiB;AAAA","sourcesContent":["\n\n\n$title-bar-color: #404040;\n$title-bar-radius: .5rem;\n$h-margin: 1rem;\n$v-margin: .5rem;\n$faint-text-color: #777;\n$faint-separator-color: #e6e6e6;\n$overlay-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n\n// Token and token lists\n$extracted-token-color: #ebebeb;\n$special-token-color: #ccc;\n$subtitle-color: #595959;\n$token-popup-spacing-offset: .5rem;\n\n.editor-container {\n  width: 40rem;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 2rem;\n  display: inline-block;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  -webkit-font-smoothing: antialiased;\n  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;\n}\n\n.template-title {\n  background-color: $title-bar-color;\n\n  // display\n  display: flex;\n  flex-direction: row;\n\n  // text formatting\n  color: white;\n  font-weight: 500;\n  font-size: 1.1rem;\n\n  // borders and spacing\n  border-top-left-radius: $title-bar-radius;\n  border-top-right-radius: $title-bar-radius;\n  padding: $v-margin $h-margin;\n\n  .title-buttons {\n    margin-left: auto;\n\n    img {\n      opacity: .6;\n      vertical-align: middle;\n    }\n  }\n}\n\n.email-body {\n  margin-top: 1rem;\n}\n\n$line-padding: .5rem;\n.template-body {\n  padding: 0 $h-margin $v-margin;\n  height: 100%;\n\n  .header-line {\n    display: flex;\n    padding-bottom: $line-padding;\n    padding-top: $line-padding;\n    border-bottom: $faint-separator-color 1px solid;\n  }\n\n  .line-label {\n    font-size: 1.1rem;\n    color: $faint-text-color;\n    margin-right: 1rem;\n  }\n}\n\n.content {\n  min-height: 8rem;\n  margin-top: 1rem;\n}\n\n.editable-area-layers {\n  position: relative;\n\n  .footer-stack {\n    display: inline-block;\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    z-index: 100;\n  }\n}\n\n.footer {\n  display: flex;\n  flex-direction: row;\n  align-items: flex-end;\n\n  // Stack of formatting toolbar on top of misc toolbar\n  & > :last-child {\n    margin-left: 1rem;\n    display: flex;\n    flex-direction: column;\n\n    & > :first-child {\n      margin-bottom: .5rem;\n    }\n  }\n}\n\n// Eliminate outline on focused content-editable div\n*:focus {\n  outline: none;\n}\n\nimg {\n  max-width: 1000px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

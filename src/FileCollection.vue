@@ -1,11 +1,19 @@
 <template>
 
   <!-- Hidden input element on which we trigger 'click' to
-       provoke opening of browser file dialog -->
+       provoke opening of file selection dialog -->
   <input
       id="fileInput"
       type="file"
       @change="filesSelected($event.target.files)"
+      style="display:none">
+
+  <!-- Hidden input of triggering image file dialog -->
+  <input
+      id="imageInput"
+      type="file"
+      accept="image/png, image/jpeg, image/gif"
+      @change="imageSelected($event.target.files)"
       style="display:none">
 
   <div class="file-collection">
@@ -32,6 +40,8 @@ export default {
 
   components: {FileView},
 
+  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress'],
+
   props: {
 
     /**
@@ -53,8 +63,6 @@ export default {
 
   },
 
-  emits: ['deleteFile'],
-
   data() {
     return {
       files: undefined
@@ -72,6 +80,10 @@ export default {
       window.document.getElementById('fileInput').click()
     },
 
+    openImageDialog() {
+      window.document.getElementById('imageInput').click()
+    },
+
     filesSelected(webApiFileList) {
       console.log("files selected", webApiFileList);
       for (let i = 0; i < webApiFileList.length; i++) {
@@ -80,6 +92,14 @@ export default {
         this.files.push(uploaderFile)
         console.log("component file list", this.files)
       }
+    },
+
+    imageSelected(webApiFileList) {
+      let imageFileObject = new FileObject(webApiFileList[0])
+      this.$emit('imageSelected', imageFileObject)
+      imageFileObject.upload((progress) => {
+        this.$emit('imageUploadProgress', progress)
+      })
     },
 
     deleteLocalDescriptor(fileId) {

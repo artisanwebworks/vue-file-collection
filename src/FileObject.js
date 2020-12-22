@@ -60,6 +60,10 @@ export class FileObject {
             })
 
     }
+
+    getLocalBlobURL() {
+      return window.URL.createObjectURL(this.fileData)
+    }
 }
 
 /**

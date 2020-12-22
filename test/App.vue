@@ -33,7 +33,10 @@
         <file-collection
             :initial-files="files"
             ref="fileCollection"
+
             @deleteFile="deleteFile"
+            @imageSelected="imageSelected"
+            @imageUploadProgress="imageUploadProgress"
         />
 
       </div>
@@ -42,6 +45,9 @@
         Hello World,
         ...
         <br/>
+
+        <img v-for="imageFile in imageFiles" :src="imageFile.getLocalBlobURL()">
+
         <br/>
         <br/>
         <br/>
@@ -51,6 +57,7 @@
 
       <div>
         <button @click="add">Attach File</button>
+        <button @click="insertImage">Insert Image</button>
       </div>
     </div>
   </div>
@@ -76,7 +83,9 @@ export default {
         new FileObject({name: "bar-baz-file.pdf", size: 124000}, STATES.UPLOADED),
         new FileObject({name: "other-file.pdf", size: 6400}, STATES.UPLOADED),
         new FileObject({name: "brochure.pdf", size: 98000}, STATES.UPLOADED)
-      ]
+      ],
+
+      imageFiles: []
     }
   },
 
@@ -88,6 +97,19 @@ export default {
 
     deleteFile(id) {
       console.log("deleting file", id)
+    },
+
+    insertImage() {
+      this.$refs.fileCollection.openImageDialog()
+    },
+
+    imageSelected(fileObject) {
+      this.imageFiles.push(fileObject)
+      console.log("image file object", fileObject);
+    },
+
+    imageUploadProgress(progress) {
+      console.log("upload progress", progress);
     }
   },
 
@@ -212,4 +234,7 @@ $line-padding: .5rem;
   outline: none;
 }
 
+img {
+  max-width: 1000px;
+}
 </style>
