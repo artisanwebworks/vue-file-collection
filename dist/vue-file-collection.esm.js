@@ -1,6 +1,6 @@
 import { pushScopeId, popScopeId, openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, withScopeId, resolveComponent, createCommentVNode, renderList } from 'vue';
 import axios from 'axios';
-import { Guid } from 'guid-ts';
+import 'guid-ts';
 
 var script = {
 
@@ -107,7 +107,7 @@ const STATES = {
 };
 class FileObject {
   constructor(fileData, state = STATES.PENDING_UPLOAD) {
-    this.id = Guid.newGuid().contentStr;
+    // this.id = Guid.newGuid().contentStr
     this.name = fileData.name;
     this.size = fileData.size;
     this.state = state;
@@ -133,10 +133,12 @@ class FileObject {
 
     this.state = STATES.UPLOADING;
     return getAwsSignedPolicy().then(awsData => {
+      this.id = awsData.fileId;
       const formData = createFormData(awsData.postParams, this.fileData);
       const config = {
         onUploadProgress
       };
+      this.S3_url = awsData.postUrl;
       return axios.post(awsData.postUrl, formData, config);
     }).then(result => {
       this.state = STATES.UPLOADED;
@@ -168,13 +170,12 @@ function getAwsSignedPolicy() {
   return axios.get(FileObject.awsSigningEndpoint).then(res => {
     return Promise.resolve(res.data);
   }).catch(err => {
-    console.error("Dropzone failed to get aws-sign", err);
     return Promise.reject(err);
   });
 }
 
 function createFormData(awsFields, webApiFile) {
-  let formData = new FormData();
+  let formData = new FormData(); // Append Post-policy related fields returned by signing endpoint
 
   for (const awsFieldId in awsFields) {
     if (awsFields.hasOwnProperty(awsFieldId)) {
@@ -182,6 +183,8 @@ function createFormData(awsFields, webApiFile) {
     }
   }
 
+  formData.append('x-amz-meta-name', webApiFile.name);
+  formData.append('Content-Type', webApiFile.type);
   formData.append('file', webApiFile);
   return formData;
 }
@@ -194,7 +197,7 @@ var script$1 = {
 
   components: {FileView: script},
 
-  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress'],
+  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress', 'imageUploadComplete'],
 
   props: {
 
@@ -253,7 +256,10 @@ var script$1 = {
       this.$emit('imageSelected', imageFileObject);
       imageFileObject.upload((progress) => {
         this.$emit('imageUploadProgress', progress);
-      });
+      })
+        .then(result => {
+          this.$emit('imageUploadComplete', imageFileObject);
+        });
     },
 
     deleteLocalDescriptor(fileId) {

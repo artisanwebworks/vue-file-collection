@@ -14,7 +14,7 @@ export class FileObject {
     static awsSigningEndpoint
 
     constructor(fileData, state = STATES.PENDING_UPLOAD) {
-        this.id = Guid.newGuid().contentStr
+        // this.id = Guid.newGuid().contentStr
         this.name = fileData.name
         this.size = fileData.size
         this.state = state
@@ -44,8 +44,10 @@ export class FileObject {
         return getAwsSignedPolicy()
 
             .then(awsData => {
+                this.id = awsData.fileId
                 const formData = createFormData(awsData.postParams, this.fileData)
                 const config = {onUploadProgress}
+                this.S3_url = awsData.postUrl
                 return axios.post(awsData.postUrl, formData, config)
             })
 
@@ -82,7 +84,6 @@ function getAwsSignedPolicy() {
             return Promise.resolve(res.data)
         })
         .catch((err) => {
-            console.error("Dropzone failed to get aws-sign", err)
             return Promise.reject(err)
         })
 }
@@ -92,12 +93,16 @@ function createFormData(awsFields, webApiFile) {
 
     let formData = new FormData()
 
+    // Append Post-policy related fields returned by signing endpoint
     for (const awsFieldId in awsFields) {
         if (awsFields.hasOwnProperty(awsFieldId)) {
             formData.append(awsFieldId, awsFields[awsFieldId])
         }
     }
 
+    formData.append('x-amz-meta-name', webApiFile.name)
+    formData.append('Content-Type', webApiFile.type)
     formData.append('file', webApiFile)
+
     return formData
 }

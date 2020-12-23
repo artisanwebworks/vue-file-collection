@@ -1832,7 +1832,7 @@ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https:
   components: {
     FileView: _FileView_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress'],
+  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress', 'imageUploadComplete'],
   props: {
     /**
      * Array of S3Uploader files representing previous uploads.
@@ -1884,6 +1884,8 @@ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https:
       this.$emit('imageSelected', imageFileObject);
       imageFileObject.upload(function (progress) {
         _this.$emit('imageUploadProgress', progress);
+      }).then(function (result) {
+        _this.$emit('imageUploadComplete', imageFileObject);
       });
     },
     deleteLocalDescriptor: function deleteLocalDescriptor(fileId) {
@@ -2012,6 +2014,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     imageUploadProgress: function imageUploadProgress(progress) {
       console.log("upload progress", progress);
+    },
+    imageUploadComplete: function imageUploadComplete(fileObject) {
+      console.log("upload complete", fileObject);
     }
   }
 });
@@ -2229,10 +2234,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ref: "fileCollection",
     onDeleteFile: $options.deleteFile,
     onImageSelected: $options.imageSelected,
-    onImageUploadProgress: $options.imageUploadProgress
+    onImageUploadProgress: $options.imageUploadProgress,
+    onImageUploadComplete: $options.imageUploadComplete
   }, null, 8
   /* PROPS */
-  , ["initial-files", "onDeleteFile", "onImageSelected", "onImageUploadProgress"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [_hoisted_8, _hoisted_9, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.imageFiles, function (imageFile) {
+  , ["initial-files", "onDeleteFile", "onImageSelected", "onImageUploadProgress", "onImageUploadComplete"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [_hoisted_8, _hoisted_9, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.imageFiles, function (imageFile) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
       src: imageFile.getLocalBlobURL()
     }, null, 8
@@ -2290,7 +2296,7 @@ var FileObject = /*#__PURE__*/function () {
 
     _classCallCheck(this, FileObject);
 
-    this.id = guid_ts__WEBPACK_IMPORTED_MODULE_1__.Guid.newGuid().contentStr;
+    // this.id = Guid.newGuid().contentStr
     this.name = fileData.name;
     this.size = fileData.size;
     this.state = state;
@@ -2308,10 +2314,12 @@ var FileObject = /*#__PURE__*/function () {
 
       this.state = STATES.UPLOADING;
       return getAwsSignedPolicy().then(function (awsData) {
+        _this.id = awsData.fileId;
         var formData = createFormData(awsData.postParams, _this.fileData);
         var config = {
           onUploadProgress: onUploadProgress
         };
+        _this.S3_url = awsData.postUrl;
         return axios__WEBPACK_IMPORTED_MODULE_0___default().post(awsData.postUrl, formData, config);
       }).then(function (result) {
         _this.state = STATES.UPLOADED;
@@ -2361,13 +2369,12 @@ function getAwsSignedPolicy() {
   return axios__WEBPACK_IMPORTED_MODULE_0___default().get(FileObject.awsSigningEndpoint).then(function (res) {
     return Promise.resolve(res.data);
   })["catch"](function (err) {
-    console.error("Dropzone failed to get aws-sign", err);
     return Promise.reject(err);
   });
 }
 
 function createFormData(awsFields, webApiFile) {
-  var formData = new FormData();
+  var formData = new FormData(); // Append Post-policy related fields returned by signing endpoint
 
   for (var awsFieldId in awsFields) {
     if (awsFields.hasOwnProperty(awsFieldId)) {
@@ -2375,6 +2382,8 @@ function createFormData(awsFields, webApiFile) {
     }
   }
 
+  formData.append('x-amz-meta-name', webApiFile.name);
+  formData.append('Content-Type', webApiFile.type);
   formData.append('file', webApiFile);
   return formData;
 }

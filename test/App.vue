@@ -37,6 +37,7 @@
             @deleteFile="deleteFile"
             @imageSelected="imageSelected"
             @imageUploadProgress="imageUploadProgress"
+            @imageUploadComplete="imageUploadComplete"
         />
 
       </div>
@@ -110,6 +111,10 @@ export default {
 
     imageUploadProgress(progress) {
       console.log("upload progress", progress);
+    },
+
+    imageUploadComplete(fileObject) {
+      console.log("upload complete", fileObject);
     }
   },
 

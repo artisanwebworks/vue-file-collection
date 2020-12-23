@@ -40,7 +40,7 @@ export default {
 
   components: {FileView},
 
-  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress'],
+  emits: ['deleteFile', 'imageSelected', 'imageUploadProgress', 'imageUploadComplete'],
 
   props: {
 
@@ -100,6 +100,9 @@ export default {
       imageFileObject.upload((progress) => {
         this.$emit('imageUploadProgress', progress)
       })
+        .then(result => {
+          this.$emit('imageUploadComplete', imageFileObject)
+        })
     },
 
     deleteLocalDescriptor(fileId) {
