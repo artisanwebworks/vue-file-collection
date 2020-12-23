@@ -1857,7 +1857,6 @@ _FileObject__WEBPACK_IMPORTED_MODULE_1__.FileObject.awsSigningEndpoint = "https:
     };
   },
   created: function created() {
-    console.log("file collection created");
     this.files = this.initialFiles;
   },
   methods: {
@@ -2315,11 +2314,11 @@ var FileObject = /*#__PURE__*/function () {
       this.state = STATES.UPLOADING;
       return getAwsSignedPolicy().then(function (awsData) {
         _this.id = awsData.fileId;
+        _this.downloadUrl = awsData.downloadUrl;
         var formData = createFormData(awsData.postParams, _this.fileData);
         var config = {
           onUploadProgress: onUploadProgress
         };
-        _this.S3_url = awsData.postUrl;
         return axios__WEBPACK_IMPORTED_MODULE_0___default().post(awsData.postUrl, formData, config);
       }).then(function (result) {
         _this.state = STATES.UPLOADED;

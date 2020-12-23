@@ -70,7 +70,6 @@ export default {
   },
 
   created() {
-    console.log("file collection created");
     this.files = this.initialFiles
   },
 

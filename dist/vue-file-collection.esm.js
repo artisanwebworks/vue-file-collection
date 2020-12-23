@@ -134,11 +134,11 @@ class FileObject {
     this.state = STATES.UPLOADING;
     return getAwsSignedPolicy().then(awsData => {
       this.id = awsData.fileId;
+      this.downloadUrl = awsData.downloadUrl;
       const formData = createFormData(awsData.postParams, this.fileData);
       const config = {
         onUploadProgress
       };
-      this.S3_url = awsData.postUrl;
       return axios.post(awsData.postUrl, formData, config);
     }).then(result => {
       this.state = STATES.UPLOADED;
@@ -227,7 +227,6 @@ var script$1 = {
   },
 
   created() {
-    console.log("file collection created");
     this.files = this.initialFiles;
   },
 

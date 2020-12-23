@@ -45,9 +45,9 @@ export class FileObject {
 
             .then(awsData => {
                 this.id = awsData.fileId
+                this.downloadUrl = awsData.downloadUrl
                 const formData = createFormData(awsData.postParams, this.fileData)
                 const config = {onUploadProgress}
-                this.S3_url = awsData.postUrl
                 return axios.post(awsData.postUrl, formData, config)
             })
 
