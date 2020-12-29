@@ -279,8 +279,9 @@ var script$1 = {
 const _withId = /*#__PURE__*/withScopeId("data-v-8306af1a");
 
 pushScopeId("data-v-8306af1a");
-const _hoisted_1$1 = { class: "dropdown" };
-const _hoisted_2$1 = {
+const _hoisted_1$1 = { class: "file-collection-container" };
+const _hoisted_2$1 = { class: "dropdown" };
+const _hoisted_3$1 = {
   class: "file",
   type: "button",
   id: "dropdownMenuButton",
@@ -288,69 +289,72 @@ const _hoisted_2$1 = {
   "aria-haspopup": "true",
   "aria-expanded": "false"
 };
-const _hoisted_3$1 = /*#__PURE__*/createVNode("a", null, [
+const _hoisted_4 = /*#__PURE__*/createVNode("a", null, [
   /*#__PURE__*/createVNode("div", { class: "name" }, "Attachments")
 ], -1 /* HOISTED */);
-const _hoisted_4 = { class: "size" };
-const _hoisted_5 = {
+const _hoisted_5 = { class: "size" };
+const _hoisted_6 = {
   class: "dropdown-menu",
   "aria-labelledby": "dropdownMenuButton"
 };
-const _hoisted_6 = { class: "file-collection" };
+const _hoisted_7 = { class: "file-collection" };
 popScopeId();
 
 const render$1 = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
   const _component_file_view = resolveComponent("file-view");
 
   return (openBlock(), createBlock(Fragment, null, [
-    createCommentVNode(" Hidden input element on which we trigger 'click' to\n       provoke opening of file selection dialog "),
-    createVNode("input", {
-      id: "fileInput",
-      type: "file",
-      onChange: _cache[1] || (_cache[1] = $event => ($options.filesSelected($event.target.files))),
-      style: {"display":"none"}
-    }, null, 32 /* HYDRATE_EVENTS */),
-    createCommentVNode(" Hidden input of triggering image file dialog "),
-    createVNode("input", {
-      id: "imageInput",
-      type: "file",
-      accept: "image/png, image/jpeg, image/gif",
-      onChange: _cache[2] || (_cache[2] = $event => ($options.imageSelected($event.target.files))),
-      style: {"display":"none"}
-    }, null, 32 /* HYDRATE_EVENTS */),
-    createCommentVNode(" If only one file attachment, render the file view "),
-    ($data.files.length === 1)
-      ? (openBlock(), createBlock(_component_file_view, {
-          key: 0,
-          "file-object": $data.files[0],
-          onDelete: $options.deleteLocalDescriptor
-        }, null, 8 /* PROPS */, ["file-object", "onDelete"]))
-      : ($data.files.length > 1)
-        ? (openBlock(), createBlock(Fragment, { key: 1 }, [
-            createCommentVNode(" If multiple files, render a dropdown "),
-            createVNode("div", _hoisted_1$1, [
-              createCommentVNode(" We style the button like a file view... "),
-              createVNode("button", _hoisted_2$1, [
-                createCommentVNode(" \"file name\" a fixed attachments label "),
-                _hoisted_3$1,
-                createCommentVNode(" \"size\" the count of attachments "),
-                createVNode("div", _hoisted_4, " (" + toDisplayString($data.files.length) + ") ", 1 /* TEXT */)
-              ]),
-              createCommentVNode(" The dropdown: vertical list of file attachments "),
-              createVNode("div", _hoisted_5, [
+    createVNode("div", _hoisted_1$1, [
+      createCommentVNode(" Hidden input element on which we trigger 'click' to\n         provoke opening of file selection dialog "),
+      createVNode("input", {
+        id: "fileInput",
+        type: "file",
+        onChange: _cache[1] || (_cache[1] = $event => ($options.filesSelected($event.target.files))),
+        style: {"display":"none"}
+      }, null, 32 /* HYDRATE_EVENTS */),
+      createCommentVNode(" Hidden input of triggering image file dialog "),
+      createVNode("input", {
+        id: "imageInput",
+        type: "file",
+        accept: "image/png, image/jpeg, image/gif",
+        onChange: _cache[2] || (_cache[2] = $event => ($options.imageSelected($event.target.files))),
+        style: {"display":"none"}
+      }, null, 32 /* HYDRATE_EVENTS */),
+      createCommentVNode(" If only one file attachment, render the file view "),
+      ($data.files.length === 1)
+        ? (openBlock(), createBlock(_component_file_view, {
+            key: 0,
+            "file-object": $data.files[0],
+            onDelete: $options.deleteLocalDescriptor
+          }, null, 8 /* PROPS */, ["file-object", "onDelete"]))
+        : ($data.files.length > 1)
+          ? (openBlock(), createBlock(Fragment, { key: 1 }, [
+              createCommentVNode(" If multiple files, render a dropdown "),
+              createVNode("div", _hoisted_2$1, [
+                createCommentVNode(" We style the button like a file view... "),
+                createVNode("button", _hoisted_3$1, [
+                  createCommentVNode(" \"file name\" a fixed attachments label "),
+                  _hoisted_4,
+                  createCommentVNode(" \"size\" the count of attachments "),
+                  createVNode("div", _hoisted_5, " (" + toDisplayString($data.files.length) + ") ", 1 /* TEXT */)
+                ]),
+                createCommentVNode(" The dropdown: vertical list of file attachments "),
                 createVNode("div", _hoisted_6, [
-                  (openBlock(true), createBlock(Fragment, null, renderList($data.files, (file) => {
-                    return (openBlock(), createBlock(_component_file_view, {
-                      "file-object": file,
-                      onDelete: _cache[3] || (_cache[3] = $event => ($options.deleteLocalDescriptor($event)))
-                    }, null, 8 /* PROPS */, ["file-object"]))
-                  }), 256 /* UNKEYED_FRAGMENT */))
+                  createVNode("div", _hoisted_7, [
+                    (openBlock(true), createBlock(Fragment, null, renderList($data.files, (file) => {
+                      return (openBlock(), createBlock(_component_file_view, {
+                        "file-object": file,
+                        onDelete: _cache[3] || (_cache[3] = $event => ($options.deleteLocalDescriptor($event)))
+                      }, null, 8 /* PROPS */, ["file-object"]))
+                    }), 256 /* UNKEYED_FRAGMENT */))
+                  ])
                 ])
               ])
-            ])
-          ], 64 /* STABLE_FRAGMENT */))
-        : createCommentVNode("v-if", true)
-  ], 64 /* STABLE_FRAGMENT */))
+            ], 64 /* STABLE_FRAGMENT */))
+          : createCommentVNode("v-if", true)
+    ]),
+    createCommentVNode(" .file-collection-container ")
+  ], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */))
 });
 
 script$1.render = render$1;

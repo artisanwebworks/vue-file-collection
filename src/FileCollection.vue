@@ -1,64 +1,65 @@
 <template>
+  <div class="file-collection-container">
 
-  <!-- Hidden input element on which we trigger 'click' to
-       provoke opening of file selection dialog -->
-  <input
-      id="fileInput"
-      type="file"
-      @change="filesSelected($event.target.files)"
-      style="display:none">
+    <!-- Hidden input element on which we trigger 'click' to
+         provoke opening of file selection dialog -->
+    <input
+        id="fileInput"
+        type="file"
+        @change="filesSelected($event.target.files)"
+        style="display:none">
 
-  <!-- Hidden input of triggering image file dialog -->
-  <input
-      id="imageInput"
-      type="file"
-      accept="image/png, image/jpeg, image/gif"
-      @change="imageSelected($event.target.files)"
-      style="display:none">
+    <!-- Hidden input of triggering image file dialog -->
+    <input
+        id="imageInput"
+        type="file"
+        accept="image/png, image/jpeg, image/gif"
+        @change="imageSelected($event.target.files)"
+        style="display:none">
 
-  <!-- If only one file attachment, render the file view -->
-  <file-view
-      v-if="files.length === 1"
-      :file-object="files[0]"
-      @delete="deleteLocalDescriptor"
-  />
+    <!-- If only one file attachment, render the file view -->
+    <file-view
+        v-if="files.length === 1"
+        :file-object="files[0]"
+        @delete="deleteLocalDescriptor"
+    />
 
-  <!-- If multiple files, render a dropdown -->
-  <div v-else-if="files.length > 1" class="dropdown">
+    <!-- If multiple files, render a dropdown -->
+    <div v-else-if="files.length > 1" class="dropdown">
 
-    <!-- We style the button like a file view... -->
-    <button class="file"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
+      <!-- We style the button like a file view... -->
+      <button class="file"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
 
-      <!-- "file name" a fixed attachments label -->
-      <a>
-        <div class="name">Attachments</div>
-      </a>
+        <!-- "file name" a fixed attachments label -->
+        <a>
+          <div class="name">Attachments</div>
+        </a>
 
-      <!-- "size" the count of attachments -->
-      <div class="size">
-        ({{ files.length }})
-      </div>
+        <!-- "size" the count of attachments -->
+        <div class="size">
+          ({{ files.length }})
+        </div>
 
-    </button>
+      </button>
 
-    <!-- The dropdown: vertical list of file attachments -->
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <div class="file-collection">
-        <file-view
-            v-for="file in files"
-            :file-object="file"
-            @delete="deleteLocalDescriptor($event)"
-        />
+      <!-- The dropdown: vertical list of file attachments -->
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="file-collection">
+          <file-view
+              v-for="file in files"
+              :file-object="file"
+              @delete="deleteLocalDescriptor($event)"
+          />
+        </div>
       </div>
     </div>
-  </div>
 
-
+  </div> <!-- .file-collection-container -->
 </template>
 
 <script>
