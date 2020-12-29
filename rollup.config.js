@@ -1,6 +1,7 @@
 import vue from 'rollup-plugin-vue'
 import babel from '@rollup/plugin-babel';
 import scss from 'rollup-plugin-scss'
+import image from '@rollup/plugin-image';
 
 export default {
     input: 'src/FileCollection.vue',
@@ -11,6 +12,7 @@ export default {
     plugins: [
         scss(),
         vue(),
-        babel({ babelHelpers: 'bundled' })
+        babel({ babelHelpers: 'bundled' }),
+        image()
     ]
 }

@@ -4,6 +4,8 @@ import { openBlock, createBlock, createVNode, toDisplayString, Fragment, createT
 import axios from 'axios';
 import 'guid-ts';
 
+var img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAYUlEQVQ4y2P4//8/A7Uxw6ihw8BQIDAAYn40MX6QOFmGQg38AMQnYAZDDTwBFTcgx1CYAf+htBwan59c7yMb/JMYA4mKKKgLfyIZLEdpRFHXpTQJU5rEPk3S6WjeHwGGAgB7bY/MvPH1YwAAAABJRU5ErkJggg==";
+
 var script = {
 
   name: "FileView",
@@ -19,7 +21,8 @@ var script = {
 
   data() {
     return {
-      uploadPercentage: "0%"
+      uploadPercentage: "0%",
+      xImg: img
     }
   },
 
@@ -69,8 +72,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ]),
     createVNode("img", {
       class: "remove",
-      src: require('./resource/x.png'),
-      onClick: _cache[1] || (_cache[1] = (...args) => ($options.deleteThisFile && $options.deleteThisFile(...args)))
+      src: $data.xImg,
+      onClick: _cache[1] || (_cache[1] = (...args) => ($options.deleteThisFile && $options.deleteThisFile(...args))),
+      alt: "delete icon"
     }, null, 8 /* PROPS */, ["src"])
   ]))
 }

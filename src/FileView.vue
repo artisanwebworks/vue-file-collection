@@ -13,12 +13,14 @@
       </template>
     </div>
 
-    <img class="remove" :src="require('./resource/x.png')" @click="deleteThisFile">
+    <img class="remove" :src="xImg" @click="deleteThisFile" alt="delete icon">
 
   </div>
 </template>
 
 <script>
+
+import xImg from './resource/x.png'
 
 export default {
 
@@ -35,7 +37,8 @@ export default {
 
   data() {
     return {
-      uploadPercentage: "0%"
+      uploadPercentage: "0%",
+      xImg
     }
   },
 
