@@ -1,4 +1,6 @@
-import { pushScopeId, popScopeId, openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, withScopeId, resolveComponent, createCommentVNode, renderList } from 'vue';
+import 'bootstrap/js/dist/dropdown';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, pushScopeId, popScopeId, resolveComponent, createCommentVNode, renderList, withScopeId } from 'vue';
 import axios from 'axios';
 import 'guid-ts';
 
@@ -47,15 +49,11 @@ var script = {
 
 };
 
-const _withId = /*#__PURE__*/withScopeId("data-v-2230ea8c");
-
-pushScopeId("data-v-2230ea8c");
 const _hoisted_1 = { class: "file" };
 const _hoisted_2 = { class: "name" };
 const _hoisted_3 = { class: "size" };
-popScopeId();
 
-const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
+function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createBlock("div", _hoisted_1, [
     createVNode("a", null, [
       createVNode("div", _hoisted_2, toDisplayString($props.fileObject.name), 1 /* TEXT */)
@@ -69,19 +67,15 @@ const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $optio
             createTextVNode(" (" + toDisplayString($options.filesizeKb) + ") ", 1 /* TEXT */)
           ], 64 /* STABLE_FRAGMENT */))
     ]),
-    createVNode("div", {
-      role: "button",
-      "aria-label": "Remove attachment",
-      class: "X",
-      tabindex: "-1",
-      "data-tooltip": "Remove attachment",
+    createVNode("img", {
+      class: "remove",
+      src: require('./resource/x.png'),
       onClick: _cache[1] || (_cache[1] = (...args) => ($options.deleteThisFile && $options.deleteThisFile(...args)))
-    })
+    }, null, 8 /* PROPS */, ["src"])
   ]))
-});
+}
 
 script.render = render;
-script.__scopeId = "data-v-2230ea8c";
 script.__file = "src/FileView.vue";
 
 function _defineProperty(obj, key, value) {
@@ -256,9 +250,9 @@ var script$1 = {
       imageFileObject.upload((progress) => {
         this.$emit('imageUploadProgress', progress);
       })
-        .then(result => {
-          this.$emit('imageUploadComplete', imageFileObject);
-        });
+          .then(result => {
+            this.$emit('imageUploadComplete', imageFileObject);
+          });
     },
 
     deleteLocalDescriptor(fileId) {
@@ -278,13 +272,30 @@ var script$1 = {
   }
 };
 
-const _withId$1 = /*#__PURE__*/withScopeId("data-v-8306af1a");
+const _withId = /*#__PURE__*/withScopeId("data-v-8306af1a");
 
 pushScopeId("data-v-8306af1a");
-const _hoisted_1$1 = { class: "file-collection" };
+const _hoisted_1$1 = { class: "dropdown" };
+const _hoisted_2$1 = {
+  class: "file",
+  type: "button",
+  id: "dropdownMenuButton",
+  "data-toggle": "dropdown",
+  "aria-haspopup": "true",
+  "aria-expanded": "false"
+};
+const _hoisted_3$1 = /*#__PURE__*/createVNode("a", null, [
+  /*#__PURE__*/createVNode("div", { class: "name" }, "Attachments")
+], -1 /* HOISTED */);
+const _hoisted_4 = { class: "size" };
+const _hoisted_5 = {
+  class: "dropdown-menu",
+  "aria-labelledby": "dropdownMenuButton"
+};
+const _hoisted_6 = { class: "file-collection" };
 popScopeId();
 
-const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $options) => {
+const render$1 = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
   const _component_file_view = resolveComponent("file-view");
 
   return (openBlock(), createBlock(Fragment, null, [
@@ -303,14 +314,38 @@ const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $o
       onChange: _cache[2] || (_cache[2] = $event => ($options.imageSelected($event.target.files))),
       style: {"display":"none"}
     }, null, 32 /* HYDRATE_EVENTS */),
-    createVNode("div", _hoisted_1$1, [
-      (openBlock(true), createBlock(Fragment, null, renderList($data.files, (file) => {
-        return (openBlock(), createBlock(_component_file_view, {
-          "file-object": file,
+    createCommentVNode(" If only one file attachment, render the file view "),
+    ($data.files.length === 1)
+      ? (openBlock(), createBlock(_component_file_view, {
+          key: 0,
+          "file-object": $data.files[0],
           onDelete: $options.deleteLocalDescriptor
         }, null, 8 /* PROPS */, ["file-object", "onDelete"]))
-      }), 256 /* UNKEYED_FRAGMENT */))
-    ])
+      : ($data.files.length > 1)
+        ? (openBlock(), createBlock(Fragment, { key: 1 }, [
+            createCommentVNode(" If multiple files, render a dropdown "),
+            createVNode("div", _hoisted_1$1, [
+              createCommentVNode(" We style the button like a file view... "),
+              createVNode("button", _hoisted_2$1, [
+                createCommentVNode(" \"file name\" a fixed attachments label "),
+                _hoisted_3$1,
+                createCommentVNode(" \"size\" the count of attachments "),
+                createVNode("div", _hoisted_4, " (" + toDisplayString($data.files.length) + ") ", 1 /* TEXT */)
+              ]),
+              createCommentVNode(" The dropdown: vertical list of file attachments "),
+              createVNode("div", _hoisted_5, [
+                createVNode("div", _hoisted_6, [
+                  (openBlock(true), createBlock(Fragment, null, renderList($data.files, (file) => {
+                    return (openBlock(), createBlock(_component_file_view, {
+                      "file-object": file,
+                      onDelete: _cache[3] || (_cache[3] = $event => ($options.deleteLocalDescriptor($event)))
+                    }, null, 8 /* PROPS */, ["file-object"]))
+                  }), 256 /* UNKEYED_FRAGMENT */))
+                ])
+              ])
+            ])
+          ], 64 /* STABLE_FRAGMENT */))
+        : createCommentVNode("v-if", true)
   ], 64 /* STABLE_FRAGMENT */))
 });
 

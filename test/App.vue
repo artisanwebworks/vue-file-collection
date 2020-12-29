@@ -30,16 +30,6 @@
       <!-- 'Subject' line -->
       <div class="header-line">
 
-        <file-collection
-            :initial-files="files"
-            ref="fileCollection"
-
-            @deleteFile="deleteFile"
-            @imageSelected="imageSelected"
-            @imageUploadProgress="imageUploadProgress"
-            @imageUploadComplete="imageUploadComplete"
-        />
-
       </div>
 
       <div class="email-body">
@@ -56,9 +46,18 @@
         <br/>
       </div>
 
-      <div>
+      <div id="bottom-row">
         <button @click="add">Attach File</button>
         <button @click="insertImage">Insert Image</button>
+        <file-collection
+            :initial-files="files"
+            ref="fileCollection"
+
+            @deleteFile="deleteFile"
+            @imageSelected="imageSelected"
+            @imageUploadProgress="imageUploadProgress"
+            @imageUploadComplete="imageUploadComplete"
+        />
       </div>
     </div>
   </div>
@@ -232,6 +231,11 @@ $line-padding: .5rem;
       margin-bottom: .5rem;
     }
   }
+}
+
+#bottom-row {
+  display: flex;
+  flex-direction: row;
 }
 
 // Eliminate outline on focused content-editable div

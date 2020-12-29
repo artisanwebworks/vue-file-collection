@@ -16,20 +16,60 @@
       @change="imageSelected($event.target.files)"
       style="display:none">
 
-  <div class="file-collection">
-    <file-view
-        v-for="file in files"
-        :file-object="file"
-        @delete="deleteLocalDescriptor"
-    />
+  <!-- If only one file attachment, render the file view -->
+  <file-view
+      v-if="files.length === 1"
+      :file-object="files[0]"
+      @delete="deleteLocalDescriptor"
+  />
+
+  <!-- If multiple files, render a dropdown -->
+  <div v-else-if="files.length > 1" class="dropdown">
+
+    <!-- We style the button like a file view... -->
+    <button class="file"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
+
+      <!-- "file name" a fixed attachments label -->
+      <a>
+        <div class="name">Attachments</div>
+      </a>
+
+      <!-- "size" the count of attachments -->
+      <div class="size">
+        ({{ files.length }})
+      </div>
+
+    </button>
+
+    <!-- The dropdown: vertical list of file attachments -->
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <div class="file-collection">
+        <file-view
+            v-for="file in files"
+            :file-object="file"
+            @delete="deleteLocalDescriptor($event)"
+        />
+      </div>
+    </div>
   </div>
+
 
 </template>
 
 <script>
 
+import 'bootstrap/js/dist/dropdown'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import "./resource/file.scss";
+
 import FileView from './FileView.vue'
 import {FileObject, STATES} from "./FileObject"
+
 export {FileObject as FileObject, STATES as STATES}
 
 FileObject.awsSigningEndpoint = "https://127.0.0.1/aws-sign"
@@ -99,9 +139,9 @@ export default {
       imageFileObject.upload((progress) => {
         this.$emit('imageUploadProgress', progress)
       })
-        .then(result => {
-          this.$emit('imageUploadComplete', imageFileObject)
-        })
+          .then(result => {
+            this.$emit('imageUploadComplete', imageFileObject)
+          })
     },
 
     deleteLocalDescriptor(fileId) {
@@ -124,10 +164,16 @@ export default {
 
 <style lang="scss" scoped>
 
+$padding: .6rem;
+
 .file-collection {
 
-  .file:not(:last-child) {
-    margin-right: .6rem;
+  width: 100%;
+  padding-left: $padding;
+  padding-right: $padding;
+
+  & > :not(:last-child) {
+    margin-bottom: $padding;
   }
 }
 
