@@ -1,7 +1,7 @@
 {
   "name": "vue-file-collection",
   "description": "Vue-3 file collection component, capable of uploading directly to s3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "",
   "license": "MIT",
   "module": "dist/vue-file-collection.esm.js",
