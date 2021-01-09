@@ -1,8 +1,5 @@
-import 'bootstrap/js/dist/dropdown';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, pushScopeId, popScopeId, resolveComponent, createCommentVNode, renderList, withScopeId } from 'vue';
+import { pushScopeId, popScopeId, openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, withScopeId, resolveComponent, createCommentVNode, renderList } from 'vue';
 import axios from 'axios';
-import 'guid-ts';
 
 var img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAYUlEQVQ4y2P4//8/A7Uxw6ihw8BQIDAAYn40MX6QOFmGQg38AMQnYAZDDTwBFTcgx1CYAf+htBwan59c7yMb/JMYA4mKKKgLfyIZLEdpRFHXpTQJU5rEPk3S6WjeHwGGAgB7bY/MvPH1YwAAAABJRU5ErkJggg==";
 
@@ -52,11 +49,15 @@ var script = {
 
 };
 
+const _withId = /*#__PURE__*/withScopeId("data-v-2230ea8c");
+
+pushScopeId("data-v-2230ea8c");
 const _hoisted_1 = { class: "file" };
 const _hoisted_2 = { class: "name" };
 const _hoisted_3 = { class: "size" };
+popScopeId();
 
-function render(_ctx, _cache, $props, $setup, $data, $options) {
+const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
   return (openBlock(), createBlock("div", _hoisted_1, [
     createVNode("a", null, [
       createVNode("div", _hoisted_2, toDisplayString($props.fileObject.name), 1 /* TEXT */)
@@ -77,9 +78,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       alt: "delete icon"
     }, null, 8 /* PROPS */, ["src"])
   ]))
-}
+});
 
 script.render = render;
+script.__scopeId = "data-v-2230ea8c";
 script.__file = "src/FileView.vue";
 
 function _defineProperty(obj, key, value) {
@@ -276,7 +278,7 @@ var script$1 = {
   }
 };
 
-const _withId = /*#__PURE__*/withScopeId("data-v-8306af1a");
+const _withId$1 = /*#__PURE__*/withScopeId("data-v-8306af1a");
 
 pushScopeId("data-v-8306af1a");
 const _hoisted_1$1 = { class: "file-collection-container" };
@@ -300,7 +302,7 @@ const _hoisted_6 = {
 const _hoisted_7 = { class: "file-collection" };
 popScopeId();
 
-const render$1 = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
+const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $options) => {
   const _component_file_view = resolveComponent("file-view");
 
   return (openBlock(), createBlock(Fragment, null, [

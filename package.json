@@ -7,14 +7,12 @@
   "module": "dist/vue-file-collection.esm.js",
   "scripts": {
     "watch:test": "webpack --watch --config test/webpack.config.js",
-    "roll": "rollup --config rollup.config.js"
-  },
-  "peerDependencies": {
-    "vue": "^3.0.4"
+    "roll": "rollup --config rollup.dist.config.js"
   },
   "dependencies": {
-    "guid-ts": "^1.1.0",
-    "axios": "^0.21.0"
+    "axios": "^0.21.0",
+    "popper.js": "^1.16.1",
+    "bootstrap": "^4.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -23,18 +21,18 @@
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-image": "^2.0.6",
+    "@rollup/plugin-node-resolve": "^11.0.1",
     "@vue/compiler-sfc": "^3.0.4",
     "babel-loader": "^8.2.2",
-    "bootstrap": "^4.5.3",
     "css-loader": "^5.0.1",
-    "jquery": "^3.5.1",
-    "popper.js": "^1.16.1",
     "rollup": "^2.35.1",
+    "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-css-only": "^3.0.0",
     "rollup-plugin-scss": "^2.6.1",
     "rollup-plugin-vue": "^6.0.0-beta.10",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
+    "vue": "^3.0.4",
     "vue-loader": "^16.1.1",
     "webpack": "^5.10.0",
     "webpack-cli": "^4.2.0",

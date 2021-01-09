@@ -64,8 +64,6 @@
 
 <script>
 
-import 'bootstrap/js/dist/dropdown'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import "./resource/file.scss";
 
 import FileView from './FileView.vue'

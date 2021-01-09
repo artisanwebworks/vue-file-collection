@@ -1,6 +1,5 @@
 
 import axios from "axios"
-import { Guid } from 'guid-ts';
 
 export const STATES = {
     PENDING_UPLOAD: "pending-upload",

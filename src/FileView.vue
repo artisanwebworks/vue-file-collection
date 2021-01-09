@@ -69,3 +69,7 @@ export default {
 }
 </script>
 
+<style lanf="scss" scoped>
+
+</style>
+

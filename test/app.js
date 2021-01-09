@@ -1,3 +1,7 @@
+
+import 'bootstrap'
+import 'bootstrap/scss/bootstrap.scss'
+
 import {createApp} from "vue"
 import rootComponent from "./App.vue"
 
