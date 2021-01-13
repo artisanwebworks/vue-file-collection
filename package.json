@@ -1,5 +1,8 @@
 {
-  "name": "vue-file-collection",
+  "name": "@artisanwebworks/vue-file-collection",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/ddosanjh"
+  },
   "description": "Vue-3 file collection component, capable of uploading directly to s3",
   "version": "1.0.1",
   "author": "",
@@ -28,6 +31,7 @@
     "rollup": "^2.35.1",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-css-only": "^3.0.0",
+    "rollup-plugin-sass": "^1.2.2",
     "rollup-plugin-scss": "^2.6.1",
     "rollup-plugin-vue": "^6.0.0-beta.10",
     "sass-loader": "^10.1.0",
