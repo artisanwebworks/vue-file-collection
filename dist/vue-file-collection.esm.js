@@ -1,6 +1,35 @@
 import { pushScopeId, popScopeId, openBlock, createBlock, createVNode, toDisplayString, Fragment, createTextVNode, withScopeId, resolveComponent, createCommentVNode, renderList } from 'vue';
 import axios from 'axios';
 
+var e = [],
+    t = [];
+
+function n(n, r) {
+  if (n && "undefined" != typeof document) {
+    var a,
+        s = !0 === r.prepend ? "prepend" : "append",
+        d = !0 === r.singleTag,
+        i = "string" == typeof r.container ? document.querySelector(r.container) : document.getElementsByTagName("head")[0];
+
+    if (d) {
+      var u = e.indexOf(i);
+      -1 === u && (u = e.push(i) - 1, t[u] = {}), a = t[u] && t[u][s] ? t[u][s] : t[u][s] = c();
+    } else a = c();
+
+    65279 === n.charCodeAt(0) && (n = n.substring(1)), a.styleSheet ? a.styleSheet.cssText += n : a.appendChild(document.createTextNode(n));
+  }
+
+  function c() {
+    var e = document.createElement("style");
+    if (e.setAttribute("type", "text/css"), r.attributes) for (var t = Object.keys(r.attributes), n = 0; n < t.length; n++) e.setAttribute(t[n], r.attributes[t[n]]);
+    var a = "prepend" === s ? "afterbegin" : "beforeend";
+    return i.insertAdjacentElement(a, e), e;
+  }
+}
+
+var css = ".file {\n  display: inline-flex;\n  align-self: start;\n  background-color: #f5f5f5;\n  font-size: .875rem;\n  border-radius: 5px;\n  border: 1px solid transparent;\n  font-weight: bold;\n  padding: 4px 4px 4px 8px;\n  white-space: nowrap; }\n  .file a {\n    color: #15c;\n    float: left;\n    padding: 0 8px 0 0;\n    text-decoration: none; }\n  .file .name {\n    display: inline-block;\n    overflow: hidden;\n    padding: 3px 0;\n    text-overflow: ellipsis;\n    vertical-align: bottom;\n    white-space: nowrap;\n    max-width: 315px; }\n  .file .size {\n    color: #777;\n    display: inline-block;\n    padding: 3px 0; }\n  .file .remove {\n    cursor: pointer;\n    height: 20px;\n    width: 20px;\n    margin-top: 1px;\n    opacity: .5; }\n\nbutton.file > .size::after {\n  display: inline-block;\n  margin-left: .255em;\n  vertical-align: .255em;\n  content: \"\";\n  border-top: .3em solid;\n  border-right: .3em solid transparent;\n  border-bottom: 0;\n  border-left: .3em solid transparent; }\n";
+n(css,{});
+
 var img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAYUlEQVQ4y2P4//8/A7Uxw6ihw8BQIDAAYn40MX6QOFmGQg38AMQnYAZDDTwBFTcgx1CYAf+htBwan59c7yMb/JMYA4mKKKgLfyIZLEdpRFHXpTQJU5rEPk3S6WjeHwGGAgB7bY/MvPH1YwAAAABJRU5ErkJggg==";
 
 var script = {
@@ -358,6 +387,9 @@ const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $o
     createCommentVNode(" .file-collection-container ")
   ], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */))
 });
+
+var css$1 = ".file-collection[data-v-8306af1a] {\n  width: 100%;\n  padding-left: 0.6rem;\n  padding-right: 0.6rem; }\n  .file-collection[data-v-8306af1a] > :not(:last-child) {\n    margin-bottom: 0.6rem; }\n";
+n(css$1,{});
 
 script$1.render = render$1;
 script$1.__scopeId = "data-v-8306af1a";
