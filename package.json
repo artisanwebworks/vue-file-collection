@@ -4,7 +4,7 @@
     "registry": "https://npm.pkg.github.com/ddosanjh"
   },
   "description": "Vue-3 file collection component, capable of uploading directly to s3",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "",
   "license": "MIT",
   "module": "dist/vue-file-collection.esm.js",
